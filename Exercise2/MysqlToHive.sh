@@ -37,9 +37,6 @@ done
 
 impala-shell -q "INVALIDATE METADATA;"
 
-
-
-
 impala-shell -q "SELECT * FROM hive_practical_exercise_1.user;"
 
 impala-shell -q "SELECT * FROM hive_practical_exercise_1.activitylog;"

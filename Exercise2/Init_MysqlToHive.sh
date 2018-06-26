@@ -9,7 +9,6 @@ impala-shell -q "CREATE DATABASE IF NOT EXISTS hive_practical_exercise_1;"
 
 echo "Creating scoop job....."
 
-#mysql -u root -pcloudera -D practical_exercise_1 -e  "alter table activitylog change  timestamp timestamps int;"
 
 
 for (( b=1; b<=5; b++ )) 
