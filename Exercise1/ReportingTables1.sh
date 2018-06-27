@@ -11,14 +11,15 @@ hive -e "CREATE  TABLE hive_practical_exercise_1.inserts as SELECT user_id, coun
 hive -e "CREATE  TABLE hive_practical_exercise_1.deletes as SELECT user_id, count(*) deletecount FROM hive_practical_exercise_1.activitylog WHERE type='DELETE' group by user_id ;"
 
 
-hive -e "CREATE  TABLE hive_practical_exercise_1.temp1 as select activitylog.user_id, ts,type from (SELECT user_id,MAX(timestamp) ts from hive_practical_exercise_1.activitylog group by user_id) z left outer join hive_practical_exercise_1.activitylog on z.ts= activitylog.timestamp ;"
+hive -e "CREATE TABLE hive_practical_exercise_1.activitytype as select activitylog.user_id, ts,type from (SELECT user_id,MAX(timestamp) ts from hive_practical_exercise_1.activitylog group by user_id) z left outer join hive_practical_exercise_1.activitylog on z.ts= activitylog.timestamp AND z.user_id=activitylog.user_id;"
 
-hive -e "CREATE  TABLE hive_practical_exercise_1.activitytype as SELECT user_id, type from  hive_practical_exercise_1.temp1;"
+
+#hive -e "CREATE  TABLE hive_practical_exercise_1.activitytype as SELECT user_id, type from  hive_practical_exercise_1.temp1;"
 
 
 #hive -e "CREATE TEMPORARY TABLE hive_practical_exercise_1.activitytype as SELECT e.user_id, e.type from  (SELECT activitylog.user_id, type from (SELECT user_id,MAX(timestamp) ts from hive_practical_exercise_1.activitylog group by user_id) z left outer join hive_practical_exercise_1.activitylog on z.ts= activitylog.timestamp)e   ;"
 
-hive -e "CREATE  TABLE hive_practical_exercise_1.isactive as  select ftab.user_id, ftab.s from    (SELECT a.user_id, if  ( unix_timestamp() - ts < 172800, 1,0) s from (select user_id, ts from hive_practical_exercise_1.temp1)a )ftab  ;"
+hive -e "CREATE  TABLE hive_practical_exercise_1.isactive as SELECT user_id, if  ( unix_timestamp() - ts < 172800, 1,0) s from hive_practical_exercise_1.activitytype ;"
 
 #hive -e "CREATE TEMPORARY TABLE hive_practical_exercise_1.isactive as  select ftab.user_id, ftab.s from    (SELECT a.user_id, if  ( unix_timestamp() - ts < 172800, 1,0) s from (select activitylog.user_id, ts from (SELECT user_id,MAX(timestamp) ts from hive_practical_exercise_1.activitylog group by user_id) z left outer join hive_practical_exercise_1.activitylog on z.ts= activitylog.timestamp) a) ftab  ;"
 
@@ -41,7 +42,7 @@ hive -e "DROP TABLE hive_practical_exercise_1.deletes"
 hive -e "DROP TABLE hive_practical_exercise_1.activitytype"
 hive -e "DROP TABLE hive_practical_exercise_1.isactive"
 hive -e "DROP TABLE hive_practical_exercise_1.uploadcount"
-hive -e "DROP TABLE hive_practical_exercise_1.temp1"
+#hive -e "DROP TABLE hive_practical_exercise_1.temp1"
 
 hive -e "select * from hive_practical_exercise_1.user_report;"
 
