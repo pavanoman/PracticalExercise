@@ -20,7 +20,7 @@ Using scoop import, this script imports user table in hive. It executes sqoop jo
 5. csvToHive.sh: 
 Here I am storing 'user_dump*.csv' files from my local LatestCSV folder to hadoop LatestCSV folder. Then i am moving files on my local machine from LatestCSV folder to CSVDump folder. In this way we will have all the files from clients in separate directory. Then i am copying files on hadoop from LatestCSV to CSVDump to make sure we have same data in hadoop and on local machine. Using 'Load Data Inpath' command i am storing data from LatestCSV on hadoop to 'csv' table.
 6. ReportingTables1.sh:This script creates user_report table.
-7. ReportingTables2.sh:This script creates user_report table.
+7. ReportingTables2.sh:This script creates user_total table.
 
 Exercise 2 (Impala and Airflow):
 
