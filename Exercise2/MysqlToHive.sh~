@@ -1,6 +1,6 @@
 #!/bin/sh
 
-
+echo "Importing Data to Hive....."
 
 for (( c=1; c<=5; c++ )) 
 do
@@ -34,6 +34,9 @@ do
 
 done
 
-hive -e "SELECT * FROM hive_practical_exercise_1.user;"
 
-hive -e "SELECT * FROM hive_practical_exercise_1.activitylog;"
+impala-shell -q "INVALIDATE METADATA;"
+
+impala-shell -q "SELECT * FROM hive_practical_exercise_1.user;"
+
+impala-shell -q "SELECT * FROM hive_practical_exercise_1.activitylog;"

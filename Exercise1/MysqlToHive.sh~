@@ -1,6 +1,6 @@
 #!/bin/sh
 
-
+echo "Importing Data to Hive....."
 
 for (( c=1; c<=5; c++ )) 
 do
