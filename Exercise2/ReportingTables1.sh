@@ -11,14 +11,16 @@ impala-shell -q "CREATE  TABLE hive_practical_exercise_1.inserts as SELECT user_
 impala-shell -q "CREATE  TABLE hive_practical_exercise_1.deletes as SELECT user_id, count(*) deletecount FROM hive_practical_exercise_1.activitylog WHERE type='DELETE' group by user_id ;"
 
 
-impala-shell -q "CREATE  TABLE hive_practical_exercise_1.temp1 as select activitylog.user_id, ts,type from (SELECT user_id,MAX(\`timestamp\`) ts from hive_practical_exercise_1.activitylog group by user_id) z left outer join hive_practical_exercise_1.activitylog on z.ts= activitylog.\`timestamp\` ;"
+#impala-shell -q "CREATE  TABLE hive_practical_exercise_1.temp1 as select activitylog.user_id, ts,type from (SELECT user_id,MAX(\`timestamp\`) ts from hive_practical_exercise_1.activitylog group by user_id) z left outer join hive_practical_exercise_1.activitylog on z.ts= activitylog.\`timestamp\` AND z.user_id=activitylog.user_id;"
 
-impala-shell -q "CREATE  TABLE hive_practical_exercise_1.activitytype as SELECT user_id, type from  hive_practical_exercise_1.temp1;"
+impala-shell -q "CREATE  TABLE hive_practical_exercise_1.activitytype as select activitylog.user_id, ts,type from (SELECT user_id,MAX(\`timestamp\`) ts from hive_practical_exercise_1.activitylog group by user_id) z left outer join hive_practical_exercise_1.activitylog on z.ts= activitylog.\`timestamp\` AND z.user_id=activitylog.user_id;"
+
+#impala-shell -q "CREATE  TABLE hive_practical_exercise_1.activitytype as SELECT user_id, type from  hive_practical_exercise_1.temp1;"
 
 
 #hive -e "CREATE TEMPORARY TABLE hive_practical_exercise_1.activitytype as SELECT e.user_id, e.type from  (SELECT activitylog.user_id, type from (SELECT user_id,MAX(timestamp) ts from hive_practical_exercise_1.activitylog group by user_id) z left outer join hive_practical_exercise_1.activitylog on z.ts= activitylog.timestamp)e   ;"
 
-impala-shell -q "CREATE  TABLE hive_practical_exercise_1.isactive as  select ftab.user_id, ftab.s from    (SELECT a.user_id, if  ( unix_timestamp() - ts < 172800, 1,0) s from (select user_id, ts from hive_practical_exercise_1.temp1)a )ftab  ;"
+impala-shell -q "CREATE  TABLE hive_practical_exercise_1.isactive as  SELECT user_id, if  ( unix_timestamp() - ts < 172800, 1,0) s from hive_practical_exercise_1.activitytype;"
 
 #hive -e "CREATE TEMPORARY TABLE hive_practical_exercise_1.isactive as  select ftab.user_id, ftab.s from    (SELECT a.user_id, if  ( unix_timestamp() - ts < 172800, 1,0) s from (select activitylog.user_id, ts from (SELECT user_id,MAX(timestamp) ts from hive_practical_exercise_1.activitylog group by user_id) z left outer join hive_practical_exercise_1.activitylog on z.ts= activitylog.timestamp) a) ftab  ;"
 
@@ -42,7 +44,7 @@ impala-shell -q "DROP TABLE hive_practical_exercise_1.deletes"
 impala-shell -q "DROP TABLE hive_practical_exercise_1.activitytype"
 impala-shell -q "DROP TABLE hive_practical_exercise_1.isactive"
 impala-shell -q "DROP TABLE hive_practical_exercise_1.uploadcount"
-impala-shell -q "DROP TABLE hive_practical_exercise_1.temp1"
+#impala-shell -q "DROP TABLE hive_practical_exercise_1.temp1"
 
 
 
