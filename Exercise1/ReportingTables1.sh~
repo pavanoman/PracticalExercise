@@ -12,7 +12,7 @@ hive -e "DROP TABLE if exists temp_practical_exercise_1.uploadcount"
 
 hive -e "CREATE  TABLE temp_practical_exercise_1.updates as select user_id, count(*) cnt FROM hive_practical_exercise_1.activitylog WHERE type='UPDATE' group by user_id ;"
 
-	if [ $? -eq 0 ]; then
+if [ $? -eq 0 ]; then
 	  echo Successfully created update table
           
 	else
@@ -21,7 +21,7 @@ hive -e "CREATE  TABLE temp_practical_exercise_1.updates as select user_id, coun
 	fi
 
 hive -e "CREATE  TABLE temp_practical_exercise_1.inserts as SELECT user_id, count(*) InsertCount FROM hive_practical_exercise_1.activitylog WHERE type='INSERT' group by user_id ;"
-	if [ $? -eq 0 ]; then
+if [ $? -eq 0 ]; then
 	  echo Successfully created inserts table
           
 	else
@@ -30,7 +30,7 @@ hive -e "CREATE  TABLE temp_practical_exercise_1.inserts as SELECT user_id, coun
 	fi
 
 hive -e "CREATE  TABLE temp_practical_exercise_1.deletes as SELECT user_id, count(*) deletecount FROM hive_practical_exercise_1.activitylog WHERE type='DELETE' group by user_id ;"
-	if [ $? -eq 0 ]; then
+if [ $? -eq 0 ]; then
 	  echo Successfully created deletes table
           
 	else
@@ -39,7 +39,7 @@ hive -e "CREATE  TABLE temp_practical_exercise_1.deletes as SELECT user_id, coun
 	fi
 
 hive -e "CREATE TABLE temp_practical_exercise_1.activitytype as select activitylog.user_id, ts,type from (SELECT user_id,MAX(timestamp) ts from hive_practical_exercise_1.activitylog group by user_id) z left outer join hive_practical_exercise_1.activitylog on z.ts= activitylog.timestamp AND z.user_id=activitylog.user_id;"
-	if [ $? -eq 0 ]; then
+if [ $? -eq 0 ]; then
 	  echo Successfully created activitytype table
           
 	else
@@ -54,7 +54,7 @@ hive -e "CREATE TABLE temp_practical_exercise_1.activitytype as select activityl
 
 hive -e "CREATE  TABLE temp_practical_exercise_1.isactive as SELECT user_id, if  ( unix_timestamp() - ts < 172800, 1,0) s from temp_practical_exercise_1.activitytype ;"
 
-	if [ $? -eq 0 ]; then
+if [ $? -eq 0 ]; then
 	  echo Successfully created isactive table
           
 	else
@@ -68,7 +68,7 @@ hive -e "CREATE  TABLE temp_practical_exercise_1.isactive as SELECT user_id, if 
 
 hive -e "CREATE  TABLE temp_practical_exercise_1.uploadcount as  select user_id, count(*)upc from hive_practical_exercise_1.csv group by user_id  ;"
 
-	if [ $? -eq 0 ]; then
+if [ $? -eq 0 ]; then
 	  echo Successfully created uploadcount table
           
 	else
@@ -85,7 +85,7 @@ left outer join temp_practical_exercise_1.activitytype act on u.id=act.user_id
 left outer join temp_practical_exercise_1.isactive isa on u.id=isa.user_id
 left outer join temp_practical_exercise_1.uploadcount upl on u.id=upl.user_id;"
 
-	if [ $? -eq 0 ]; then
+if [ $? -eq 0 ]; then
 	  echo Successfully created user_report table
           
 	else

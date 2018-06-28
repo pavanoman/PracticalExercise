@@ -10,6 +10,7 @@ impala-shell -q "DROP TABLE if exists temp_practical_exercise_1.isactive"
 impala-shell -q "DROP TABLE if exists temp_practical_exercise_1.uploadcount"
 
 
+
 impala-shell -q "CREATE  TABLE temp_practical_exercise_1.updates as select user_id, count(*) cnt FROM hive_practical_exercise_1.activitylog WHERE type='UPDATE' group by user_id  ;"
 
         if [ $? -eq 0 ]; then
@@ -110,6 +111,8 @@ impala-shell -q "DROP TABLE temp_practical_exercise_1.activitytype"
 impala-shell -q "DROP TABLE temp_practical_exercise_1.isactive"
 impala-shell -q "DROP TABLE temp_practical_exercise_1.uploadcount"
 #impala-shell -q "DROP TABLE hive_practical_exercise_1.temp1"
+
+
 
 impala-shell -q "select * from hive_practical_exercise_1.user_report;"
 

@@ -2,13 +2,11 @@
 
 echo "Importing Data to Hive....."
 
-
-
 	sqoop import --connect jdbc:mysql://localhost/practical_exercise_1 --username root --password-file /user/cloudera/root_pwd.txt --table user -m 4 --hive-import --hive-overwrite --hive-database hive_practical_exercise_1 --hive-table user
 
 	if [ $? -eq 0 ]; then
 	  echo successfully imported user table...
-          break
+          
 	else
 	  echo failed to import user table...
           exit 1
@@ -16,21 +14,15 @@ echo "Importing Data to Hive....."
 
 
 
-
-
-
-
 	sqoop job --meta-connect jdbc:hsqldb:hsql://localhost:16000/sqoop --exec hive_practical_exercise_1.activitylog
 
 	if [ $? -eq 0 ]; then
 	  echo successfully imported activitylog table...
-	  break
+	  
 	else
 	  echo failed to import activitylog table...
           exit 1
 	fi
-
-
 
 
 impala-shell -q "INVALIDATE METADATA;"

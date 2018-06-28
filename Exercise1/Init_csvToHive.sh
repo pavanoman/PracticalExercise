@@ -11,7 +11,7 @@ do
 
 	if [ $? -eq 0 ]; then
 	  echo successfully created csv table...
-          break;
+          break
 	else
 	  echo failed to create csv table...Trying again ...
           
