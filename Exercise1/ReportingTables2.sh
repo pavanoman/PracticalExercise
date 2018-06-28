@@ -11,12 +11,19 @@ do
 	  echo success
           break
 	else
-	  echo failed to insert
-          exit 1
+	  echo failed to insert..Trying again...
+          
 	fi
 
 
 done
+
+
+        if (($c == 6));then
+	  echo failed to insert...
+          exit 1
+        fi
+
 hive -e "SELECT * FROM hive_practical_exercise_1.user_total;"
 
 

@@ -18,11 +18,15 @@ do
 	if [ $? -eq 0 ]; then
 	  echo successfully created sqoop job - activitylog table...
           break
-	else
-	  echo failed to created sqoop job - activitylog table...
-          exit 1
+        else 
+          echo Process failed ..Trying again..
+	
 	fi
 
 done
 
+        if (($b == 6));then
+	  echo failed to created sqoop job - activitylog table...
+          exit 1
+        fi
 

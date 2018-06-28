@@ -42,11 +42,16 @@ do
 	  echo successfully imported data to csv table...
           break
 	else
-	  echo failed to import data to csv table...
-          exit 1
+	  echo failed to import data to csv table...Trying again...
+          
 	fi
 
 done
+
+        if (($c == 6));then
+	  echo failed to import user table...
+          exit 1
+        fi
 
 
 hive -e "SELECT * FROM hive_practical_exercise_1.csv;"

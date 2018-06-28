@@ -13,8 +13,14 @@ do
 	  echo successfully created csv table...
           break;
 	else
-	  echo failed to create csv table...
-          exit 1
+	  echo failed to create csv table...Trying again ...
+          
 	fi
 
 done
+
+
+        if (($c == 6));then
+	  echo failed to create csv table...
+          exit 1
+        fi

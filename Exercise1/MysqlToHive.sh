@@ -11,11 +11,16 @@ do
 	  echo successfully imported user table...
           break
 	else
-	  echo failed to import user table...
-          exit 1
+	  echo failed to import user table...Trying again...
+          
 	fi
 
 done
+
+        if (($c == 6));then
+	  echo failed to import user table...
+          exit 1
+        fi
 
 
 for (( b=1; b<=5; b++ )) 
@@ -28,11 +33,16 @@ do
 	  echo successfully imported activitylog table...
 	  break
 	else
-	  echo failed to import activitylog table...
-          exit 1
+	  echo failed to import activitylog table...Trying again
+          
 	fi
 
 done
+
+        if (($b == 6));then
+	  echo failed to import activitylog table...
+          exit 1
+        fi
 
 hive -e "SELECT * FROM hive_practical_exercise_1.user;"
 

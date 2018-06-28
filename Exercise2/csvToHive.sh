@@ -32,8 +32,7 @@ hadoop fs -cp workshop/hive/CSVfiles/LatestCSV/user_upload_dump* workshop/hive/C
 	fi
 
 
-for (( c=1; c<=5; c++ )) 
-do
+
 
 
 	impala-shell -q "LOAD DATA INPATH '/user/cloudera/workshop/hive/CSVfiles/LatestCSV/'  INTO TABLE hive_practical_exercise_1.csv;"
@@ -46,7 +45,7 @@ do
           exit 1
 	fi
 
-done
+
 
 
 impala-shell -q "SELECT * FROM hive_practical_exercise_1.csv;"

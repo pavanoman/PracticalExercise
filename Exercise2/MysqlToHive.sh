@@ -1,9 +1,8 @@
 #!/bin/sh
 
+echo "Importing Data to Hive....."
 
 
-for (( c=1; c<=5; c++ )) 
-do
 
 	sqoop import --connect jdbc:mysql://localhost/practical_exercise_1 --username root --password-file /user/cloudera/root_pwd.txt --table user -m 4 --hive-import --hive-overwrite --hive-database hive_practical_exercise_1 --hive-table user
 
@@ -15,11 +14,10 @@ do
           exit 1
 	fi
 
-done
 
 
-for (( b=1; b<=5; b++ )) 
-do
+
+
 
 
 	sqoop job --meta-connect jdbc:hsqldb:hsql://localhost:16000/sqoop --exec hive_practical_exercise_1.activitylog
@@ -32,7 +30,7 @@ do
           exit 1
 	fi
 
-done
+
 
 
 impala-shell -q "INVALIDATE METADATA;"
